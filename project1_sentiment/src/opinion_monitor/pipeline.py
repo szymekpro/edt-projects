@@ -1,6 +1,7 @@
 """End-to-end flow used by the GUI: fetch reviews -> predict sentiment -> return result."""
 
 from dataclasses import dataclass
+from functools import cached_property
 
 from opinion_monitor import config
 from opinion_monitor.data_sources.api_source import TMDBSource
@@ -15,7 +16,7 @@ class AnalyzedReview:
     label: str
     confidence: float
 
-    @property
+    @cached_property
     def display_text(self) -> str:
         """Review text cleaned for showing in the UI (no HTML/markdown noise)."""
         return clean_for_display(self.review.text)

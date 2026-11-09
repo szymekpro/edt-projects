@@ -1,8 +1,10 @@
 """Tkinter GUI; network work runs off the UI thread. Calls only opinion_monitor.pipeline."""
 
 import queue
+import sys
 import threading
 import tkinter as tk
+import traceback
 from tkinter import ttk
 
 from opinion_monitor import pipeline
@@ -56,6 +58,12 @@ class App(tk.Tk):
         style.configure("Share.Horizontal.TProgressbar", troughcolor=RED, background=GREEN, thickness=14)
 
     def _build_widgets(self) -> None:
+        # Status bar is packed first so it always keeps its space and errors stay visible.
+        self._status_var = tk.StringVar(value="Ready.")
+        ttk.Label(self, textvariable=self._status_var, style="Status.TLabel", anchor="w").pack(
+            fill="x", side="bottom"
+        )
+
         root = ttk.Frame(self, padding=12)
         root.pack(fill="both", expand=True)
 
@@ -76,7 +84,8 @@ class App(tk.Tk):
         summary = ttk.Frame(root)
         summary.pack(fill="x", pady=(8, 6))
         self._summary_var = tk.StringVar(value="No data yet. Enter a movie title and press Enter.")
-        ttk.Label(summary, textvariable=self._summary_var, style="Summary.TLabel").pack(anchor="w")
+        self._summary_label = ttk.Label(summary, textvariable=self._summary_var, style="Summary.TLabel")
+        self._summary_label.pack(anchor="w")
         self._share_bar = ttk.Progressbar(
             summary, style="Share.Horizontal.TProgressbar", maximum=100, value=0
         )
@@ -116,11 +125,6 @@ class App(tk.Tk):
         self._detail.pack(side="left", fill="both", expand=True)
         panes.add(detail_frame, weight=2)
 
-        self._status_var = tk.StringVar(value="Ready.")
-        ttk.Label(self, textvariable=self._status_var, style="Status.TLabel", anchor="w").pack(
-            fill="x", side="bottom"
-        )
-
     # --- actions --------------------------------------------------------
     def _on_analyze(self) -> None:
         query = self._title_var.get().strip()
@@ -136,11 +140,16 @@ class App(tk.Tk):
 
     def _worker(self, query: str) -> None:
         try:
-            self._queue.put(("ok", pipeline.analyze(query)))
+            result = pipeline.analyze(query)
+            for item in result.items:
+                item.display_text  # warm the cache off the UI thread
+            self._queue.put(("ok", result))
         except (SourceError, ModelNotFoundError) as exc:
+            print(f"[opinion_monitor] {type(exc).__name__}: {exc}", file=sys.stderr)
             self._queue.put(("error", str(exc)))
         except Exception as exc:
-            self._queue.put(("error", f"Unexpected error: {exc}"))
+            traceback.print_exc()
+            self._queue.put(("error", f"Unexpected error ({type(exc).__name__}): {exc}"))
 
     def _poll_queue(self) -> None:
         try:
@@ -151,14 +160,28 @@ class App(tk.Tk):
         self._busy.stop()
         self._busy.pack_forget()
         self._button.state(["!disabled"])
-        if kind == "ok":
-            self._show_result(payload)
-        else:
-            self._status_var.set(f"Error: {payload}")
+        try:
+            if kind == "ok":
+                self._show_result(payload)
+            else:
+                self._show_error(payload)
+        except Exception as exc:
+            traceback.print_exc()
+            self._show_error(f"Could not display results ({type(exc).__name__}): {exc}")
+
+    def _show_error(self, message: str) -> None:
+        self._result = None
+        self._tree.delete(*self._tree.get_children())
+        self._share_bar["value"] = 0
+        self._summary_label.configure(foreground=RED)
+        self._summary_var.set(f"Could not analyze: {message}")
+        self._set_detail("")
+        self._status_var.set(f"Error: {message}")
 
     # --- rendering ------------------------------------------------------
     def _show_result(self, result: pipeline.AnalysisResult) -> None:
         self._result = result
+        self._summary_label.configure(foreground="")
         self._sort_column, self._sort_reverse = None, False
         self._populate(range(len(result.items)))
         self._update_headings()
