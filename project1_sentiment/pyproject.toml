@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "opinion-monitor"
+version = "0.1.0"
+description = "Movie review sentiment monitoring (TF-IDF + Logistic Regression, TMDB API, Tkinter GUI)"
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+where = ["src"]

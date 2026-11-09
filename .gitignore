@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Secrets (use .env.example as template)
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Local data and trained artifacts
+project1_sentiment/data/raw/*
+!project1_sentiment/data/raw/.gitkeep
+project1_sentiment/models/*
+!project1_sentiment/models/.gitkeep
+
+# AI / editor-only (not part of the course deliverable)
+AGENTS.md
+.cursor/
+.cursorrules
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
