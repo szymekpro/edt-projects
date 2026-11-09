@@ -1,115 +1,110 @@
-# Projekt 1 – Inteligentny system monitorowania opinii
+# Project 1 – Intelligent opinion monitoring system
 
-## 1. Cel
+## 1. Goal
 
-Zbudować aplikację, która:
+Build an application that:
 
-1. **Pobiera teksty z Internetu** – przez API lub web scraping.
-   Dopuszczalne jest również pobieranie tekstów **wyłącznie na potrzeby predykcji**
-   (czyli dane treningowe mogą być statyczne, np. z Kaggle).
-2. **Automatycznie analizuje sentyment** tekstów: **pozytywny / negatywny**.
-3. **Udostępnia prosty graficzny interfejs użytkownika (GUI).**
-4. Korzysta z **dowolnego źródła danych**, np.:
-   - opinie z serwisów produktowych,
-   - komentarze z mediów społecznościowych,
-   - recenzje filmów.
+1. **Fetches texts from the Internet** via API or web scraping.  
+   Texts may be fetched **only for prediction** (training data may be static, e.g. Kaggle).
+2. **Automatically analyzes sentiment** as **positive / negative**.
+3. Provides a **simple graphical user interface (GUI)**.
+4. Uses **any suitable data source**, e.g. product reviews, social comments, movie reviews.
 
-## 2. Wymagania szczegółowe
+## 2. Detailed requirements
 
-### 2.1 Dane
+### 2.1 Data
 
-| ID | Wymaganie |
-|----|-----------|
-| P1-D-01 | **Dane do predykcji muszą pochodzić z Internetu** (API lub web scraping). To wymaganie obowiązkowe. |
-| P1-D-02 | Dane treningowe mogą pochodzić z: (a) danych zgromadzonych wcześniej, np. zbiór z Kaggle, lub (b) danych pobieranych z Internetu w czasie rzeczywistym. |
-| P1-D-03 | Dane treningowe i dane do predykcji **mogą pochodzić z różnych źródeł**, pod warunkiem że zbiory są **spójne pod względem struktury i charakteru** (np. ta sama domena – recenzje; zbliżony język, długość, styl tekstu, ta sama skala etykiet). |
-| P1-D-04 | Źródło danych jest dowolne (opinie produktowe, social media, recenzje filmów itp.). |
+| ID | Requirement |
+|----|-------------|
+| P1-D-01 | **Prediction data must come from the Internet** (API or scraping). Mandatory. |
+| P1-D-02 | Training data may be: (a) pre-collected (e.g. Kaggle), or (b) fetched from the Internet at runtime. |
+| P1-D-03 | Training and prediction data **may differ in source** if they are **consistent in structure and character** (domain, language, style, label scale). |
+| P1-D-04 | Data source is free choice (products, social media, movies, etc.). |
 
-### 2.2 Model analizy sentymentu
+### 2.2 Sentiment model
 
-| ID | Wymaganie |
-|----|-----------|
-| P1-M-01 | Klasyfikacja sentymentu: **pozytywny / negatywny** (klasyfikacja binarna). |
-| P1-M-02 | Model **może być trenowany, o ile tego wymaga** (trening jest więc wymagany tylko wtedy, gdy wybrane podejście go potrzebuje). |
-| P1-M-03 | Jeśli model jest trenowany: na danych zgromadzonych wcześniej (np. Kaggle) **lub** na danych pobieranych z Internetu w czasie rzeczywistym. |
-| P1-M-04 | Analiza sentymentu odbywa się **automatycznie** (bez ręcznego oznaczania pobranych tekstów). |
+| ID | Requirement |
+|----|-------------|
+| P1-M-01 | Binary sentiment: **positive / negative**. |
+| P1-M-02 | Model **may be trained if required** by the chosen approach. |
+| P1-M-03 | If trained: on pre-collected data (e.g. Kaggle) **or** data fetched online at training time. |
+| P1-M-04 | Sentiment analysis is **automatic** (no manual labeling of fetched texts). |
 
-### 2.3 Aplikacja i GUI
+### 2.3 Application and GUI
 
-| ID | Wymaganie |
-|----|-----------|
-| P1-G-01 | Aplikacja posiada **prosty GUI**. |
-| P1-G-02 | GUI umożliwia uruchomienie pobrania tekstów z Internetu i obejrzenie wyniku analizy sentymentu. |
+| ID | Requirement |
+|----|-------------|
+| P1-G-01 | **Simple GUI**. |
+| P1-G-02 | GUI triggers fetching from the Internet and shows sentiment results. |
 
-> Treść zadania nie określa dokładnych widoków GUI – poniżej propozycje nieobowiązkowe.
+> The assignment does not specify exact GUI screens – items in section 3 below are optional extras.
 
-## 3. Propozycje (nieobowiązkowe, do decyzji zespołu)
+## 3. Optional ideas (not mandatory)
 
-- Wybór źródła/zapytania (np. produkt, film, hasło) w GUI.
-- Lista pobranych tekstów z etykietą sentymentu i pewnością modelu.
-- Podsumowanie: udział pozytywnych/negatywnych, wykres.
-- Eksport wyników (CSV).
-- Ocena jakości modelu (accuracy, F1, macierz pomyłek) na zbiorze testowym.
+- Query/source selection in the GUI (product, movie, keyword).
+- List of texts with sentiment label and confidence.
+- Summary: positive/negative share, chart.
+- Export results (CSV).
+- Model quality on a test set (accuracy, F1, confusion matrix).
 
-## 4. Kryteria „zrobione” (wynikające z treści)
+## 4. Done criteria (from assignment)
 
-- [x] Teksty do predykcji pobierane z Internetu (TMDB API).
-- [x] Automatyczna klasyfikacja pozytywny/negatywny.
-- [x] Działający prosty GUI (Tkinter).
-- [ ] Udokumentowane źródło danych i spójność IMDB↔TMDB – **w raporcie PL** (w repo: `docs/requirements/` + README projektu).
-- [x] Wytrenowany model: `train` + `evaluate` (metryki na teście IMDB).
+- [x] Prediction texts fetched from the Internet (TMDB API).
+- [x] Automatic positive/negative classification.
+- [x] Working simple GUI (Tkinter).
+- [x] Training vs prediction sources and IMDB↔TMDB consistency documented in `docs/requirements/` and README (no separate report required by assignment text unless instructor requires it).
+- [x] Trained model: `train` + `evaluate` (IMDB test metrics).
 
-## 5. Podjęte decyzje
+## 5. Decisions made
 
-Kryterium wyboru: najprostsze, najczytelniejsze i najszybsze do wykonania.
+Criterion: simplest, clearest, fastest to deliver.
 
-| Kwestia | Decyzja | Uzasadnienie |
-|---------|---------|--------------|
-| Język tekstów | **Angielski** | Największy wybór zbiorów i modeli. |
-| Raport końcowy | **Tylko po polsku** | Wymóg zespołu. Kod, komentarze i komunikaty aplikacji po angielsku. |
-| Dane treningowe | **Kaggle: IMDB Dataset of 50K Movie Reviews** | Gotowe etykiety pos/neg, zbalansowany, dane statyczne (dozwolone, P1-D-02). |
-| Dane do predykcji | **TMDB API** (recenzje filmów po tytule) | Legalne API zamiast scrapingu, darmowy klucz. Ta sama domena (recenzje filmów), język i styl co zbiór treningowy, co spełnia P1-D-03. |
-| Model | **Klasyczne ML: TF-IDF + Logistic Regression** (scikit-learn) | Trening w sekundach/minutach na CPU, łatwa interpretacja, prosta ewaluacja. |
-| Interfejs | **GUI w Tkinterze** | Spełnia wymóg GUI (P1-G-01), jest w bibliotece standardowej (brak dodatkowych zależności). Logika wyłącznie w `pipeline`. |
+| Topic | Decision | Rationale |
+|-------|----------|-----------|
+| Text language | **English** | Dataset and model choice. |
+| Written report | **Not in P1 assignment** | README + requirements docs if explanation is needed. |
+| Training data | **Kaggle: IMDB 50K Movie Reviews** | Labeled pos/neg, balanced, static (P1-D-02a). |
+| Prediction data | **TMDB API** (reviews by title) | Legal API, free key; same domain (movie reviews, EN) for P1-D-03. |
+| Model | **TF-IDF + Logistic Regression** (scikit-learn) | Fast CPU training, interpretable. |
+| UI | **Tkinter GUI** | Meets P1-G-01, stdlib. Logic in `pipeline` only. |
 
-Planowany układ okna: pole na tytuł filmu + przycisk „Fetch and analyze”, tabela recenzji (fragment tekstu | sentyment | pewność), podsumowanie (udział pozytywnych/negatywnych), pasek statusu z błędami.
-Trening i ewaluacja są uruchamiane osobno jako skrypty: `python -m opinion_monitor.training.train` i `python -m opinion_monitor.training.evaluate`.
+Planned GUI: title field + “Fetch and analyze”, table (snippet | sentiment | confidence), summary bar, status line.  
+Training/evaluation: `python -m opinion_monitor.training.train` and `python -m opinion_monitor.training.evaluate`.
 
-## 6. Ryzyka i uwagi
+## 6. Risks and notes
 
-- **Tkinter i wątki.** Zapytania sieciowe muszą działać w osobnym wątku, inaczej okno się zawiesza podczas pobierania.
-- **Przesunięcie domeny.** Recenzje TMDB są krótsze i bardziej nieformalne niż IMDB 50K (dłuższe). Opisać w raporcie. Opcjonalnie sprawdzić ręcznie próbkę wyników.
-- **Brak etykiet w TMDB.** Recenzje z TMDB mają tylko ocenę liczbową (część bez niej), więc trafność na danych z Internetu można oszacować tylko na małej, ręcznie sprawdzonej próbce.
-- **Klucz API.** Wymaga rejestracji w TMDB; trzymany w `.env`, nie w repozytorium.
+- **Tkinter + threads.** Network calls run off the UI thread so the window stays responsive.
+- **Domain shift.** TMDB reviews are often shorter and more informal than IMDB 50K; document in README and demo (e.g. Morbius vs Inception).
+- **No sentiment labels on TMDB.** Only optional author star ratings; live accuracy needs manual checks or weak labels (`evaluate_web`).
+- **API key.** TMDB registration; store in `.env`, not in git.
 
-## 7. Otwarte decyzje
+## 7. Open decisions
 
-- Liczba pobieranych recenzji na zapytanie i sposób obsługi filmów bez recenzji.
-- Czy dodać klasę neutralną – wymaganie mówi tylko o pozytywny/negatywny, więc domyślnie nie.
+- Max reviews per query and UX when a movie has none (current default: `MAX_REVIEWS=40`, errors via `NoReviewsError`).
+- Neutral class: assignment is binary only; default is no neutral class.
 
-## 8. Plan spełnienia wymagań
+## 8. Requirements traceability
 
-### Jak działa system
+### Flow
 
-- **Trening:** zbiór Kaggle IMDB 50K → czyszczenie tekstu → TF-IDF + Logistic Regression → zapis modelu do `models/sentiment_model.joblib`.
-- **Predykcja:** tytuł filmu w GUI → `data_sources` pobiera recenzje z TMDB API → to samo czyszczenie tekstu → model → wynik w tabeli GUI.
-- GUI woła tylko `pipeline`; pobieranie z sieci działa w osobnym wątku.
+- **Training:** Kaggle IMDB 50K → `clean_text` inside TF-IDF → Logistic Regression → `models/sentiment_model.joblib`.
+- **Prediction:** title in GUI → TMDB → same cleaning in saved pipeline → labels in table.
+- GUI calls only `pipeline`; fetch runs in a background thread.
 
-### Mapowanie wymagań
+### Mapping
 
-| Wymaganie | Jak je spełniamy | Gdzie w kodzie |
-|-----------|------------------|----------------|
-| Pobieranie tekstów z Internetu (cel 1, P1-D-01) | Recenzje z TMDB API; dane do predykcji pochodzą wyłącznie z Internetu | `data_sources/api_source.py` |
-| Dane treningowe mogą być statyczne (P1-D-02) | Trening na zbiorze Kaggle IMDB 50K (wariant „dane zgromadzone wcześniej”) | `training/dataset.py` |
-| Różne źródła treningu i predykcji, ale spójne (P1-D-03) | IMDB i TMDB to recenzje filmów po angielsku, ten sam styl i skala etykiet; uzasadnienie i różnicę długości tekstów opisujemy w raporcie | raport (PL) |
-| Dowolne źródło danych (P1-D-04) | Recenzje filmów (przykład podany wprost w zadaniu) | – |
-| Automatyczna analiza sentymentu pozytywny/negatywny (cel 2, P1-M-01, P1-M-04) | Klasyfikacja binarna bez ręcznego etykietowania pobranych tekstów | `model/sentiment_model.py` |
-| Model trenowany, o ile tego wymaga (P1-M-02, P1-M-03) | Własny model trenowany na danych z Kaggle; ewaluacja: accuracy, precision/recall/F1, macierz pomyłek | `training/train.py`, `training/evaluate.py` |
-| Prosty GUI (cel 3, P1-G-01) | Okno Tkinter: pole na tytuł, przycisk, tabela wyników, podsumowanie | `gui/app.py` |
-| GUI uruchamia pobieranie i pokazuje wynik (P1-G-02) | Przycisk „Fetch and analyze” wywołuje `pipeline`; tabela z etykietą i pewnością oraz udział pozytywnych/negatywnych | `gui/app.py`, `pipeline.py` |
+| Requirement | How we meet it | Code |
+|-------------|----------------|------|
+| Fetch from Internet (P1-D-01) | TMDB API for prediction only | `data_sources/api_source.py` |
+| Static training allowed (P1-D-02) | Kaggle IMDB CSV | `training/dataset.py` |
+| Different sources, consistent (P1-D-03) | EN movie reviews; rationale in docs | `docs/requirements/`, README |
+| Free data source (P1-D-04) | Movie reviews (listed in assignment) | – |
+| Auto binary sentiment (P1-M-01, P1-M-04) | No manual labeling in GUI | `model/sentiment_model.py` |
+| Training (P1-M-02, P1-M-03) | Train on Kaggle; `evaluate` metrics | `training/train.py`, `training/evaluate.py` |
+| Simple GUI (P1-G-01) | Tkinter | `gui/app.py` |
+| Fetch + show results (P1-G-02) | “Fetch and analyze” → `pipeline` | `gui/app.py`, `pipeline.py` |
 
-### Stan implementacji
+### Implementation status
 
-- Kod: trening, GUI, TMDB, `evaluate`, `evaluate_web`.
-- Raport końcowy (PL) – poza repozytorium.
-- Etykiety sentymentu w TMDB: tylko przybliżenie przez ocenę użytkownika (`evaluate_web`) lub ocena ręczna w GUI.
+- Code: train, GUI, TMDB, `evaluate`, `evaluate_web`.
+- TMDB has no gold sentiment labels; `evaluate_web` uses reviewer ratings as weak labels only.

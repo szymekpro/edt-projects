@@ -1,120 +1,120 @@
-# Projekt 2 – System wyszukiwania semantycznego i ekstrakcji wiedzy
+# Project 2 – Semantic search and knowledge extraction
 
-> Status: **tylko wymagania**, brak szkieletu i kodu w repozytorium.
+> Status: **requirements only** – no code in the repository yet.
 
-## 1. Cel
+## 1. Goal
 
-Zaprojektować i zaimplementować aplikację z **graficznym interfejsem użytkownika**, która umożliwia:
+Design and implement a GUI application that supports:
 
-- tworzenie **bazy dokumentów tekstowych**,
-- wyszukiwanie informacji **różnymi metodami**,
-- automatyczne **rozpoznawanie encji nazwanych (NER)**.
+- a **text document collection**,
+- **multiple search methods**,
+- automatic **named entity recognition (NER)**.
 
-System ma integrować:
+Integrate:
 
-1. zarządzanie dokumentami,
-2. wyszukiwanie słów kluczowych,
-3. wyszukiwanie TF-IDF,
-4. wyszukiwanie semantyczne,
-5. rozpoznawanie encji w dokumentach.
+1. document management,
+2. keyword search,
+3. TF-IDF search,
+4. semantic search,
+5. entity recognition in documents.
 
-## 2. Zarządzanie bazą dokumentów
+## 2. Document collection
 
-| ID | Wymaganie |
+| ID | Requirement |
+|----|-------------|
+| P2-DB-01 | Add documents in **TXT and PDF**. |
+| P2-DB-02 | **Automatic reading and processing** of content. |
+| P2-DB-03 | **Store documents and metadata.** |
+| P2-DB-04 | **Browse** documents. |
+| P2-DB-05 | **Delete** documents. |
+| P2-DB-06 | **Automatic preparation** for search and NER (indexing, embeddings, NER on ingest, etc.). |
+
+## 3. Search module
+
+Three methods:
+
+| ID | Method | Description |
+|----|--------|-------------|
+| P2-S-01 | Keywords | Documents containing given **words or phrases**. |
+| P2-S-02 | TF-IDF | **Rank** by textual similarity. |
+| P2-S-03 | Semantic | Documents **similar in meaning** to the query. |
+
+Result and UI requirements:
+
+| ID | Requirement |
+|----|-------------|
+| P2-S-04 | Each hit: **document name**, **match score**, **snippet** related to the query. |
+| P2-S-05 | User can **open** the full document. |
+| P2-S-06 | **One query** → **side-by-side** keyword, TF-IDF, and semantic results. |
+| P2-S-07 | Show **ranking differences** between methods. |
+| P2-S-08 | Filter search results by **entity** or **entity type** (NER integration). |
+
+## 4. NER module
+
+Detect at least:
+
+- **Persons**
+- **Organizations**
+- **Locations**
+- **Dates and time periods**
+- **Other types** supported by the chosen model
+
+| ID | Requirement |
+|----|-------------|
+| P2-N-01 | Automatic detection of the above types. |
+| P2-N-02 | Show entities with **types** and **text spans**. |
+| P2-N-03 | **Visual highlighting** in the document view. |
+| P2-N-04 | **Search entities** and list documents containing them. |
+| P2-N-05 | Filter search (section 3) by entity/type (= P2-S-08). |
+
+## 5. Graphical user interface
+
+Three main views:
+
+| View | Content |
+|------|---------|
+| **Document base** | Add, browse, delete. |
+| **Search** | Method choice and results. |
+| **NER** | Entity list, filter by type, documents per entity. |
+
+| ID | Requirement |
+|----|-------------|
+| P2-G-01 | All three views. |
+| P2-G-02 | **Document details**, metadata, and **highlighted entities** from list or search results. |
+
+## 6. Priorities (from assignment)
+
+- **Text processing and exploration** matter more than UI polish or architecture.
+- **Most important:** **compare** keyword, TF-IDF, and semantic search.
+- Enable **comparing rankings** across methods.
+
+## 7. Optional extensions
+
+| ID | Extension |
 |----|-----------|
-| P2-DB-01 | Dodawanie dokumentów **TXT i PDF**. |
-| P2-DB-02 | **Automatyczne odczytywanie i przetwarzanie** treści dokumentów. |
-| P2-DB-03 | **Przechowywanie dokumentów i ich metadanych.** |
-| P2-DB-04 | **Przeglądanie** dokumentów. |
-| P2-DB-05 | **Usuwanie** dokumentów. |
-| P2-DB-06 | **Automatyczne przygotowywanie** dokumentów do wyszukiwania i analizy NER (np. indeksowanie, embeddingi, NER przy dodaniu). |
+| P2-X-01 | Panel of **top entities** (people, orgs, locations). |
+| P2-X-02 | Stats: **document count**. |
+| P2-X-03 | Stats: **text lengths**. |
+| P2-X-04 | Stats: **frequent terms**. |
+| P2-X-05 | Stats: **entity type distribution**. |
+| P2-X-06 | Visualize ranking differences between methods. |
 
-## 3. Moduł wyszukiwania informacji
+## 8. Done criteria
 
-Trzy metody wyszukiwania:
+- [ ] TXT/PDF ingest, metadata, browse, delete.
+- [ ] Automatic prep for search and NER.
+- [ ] Three search methods with name, score, snippet.
+- [ ] Comparative view: one query → three result columns.
+- [ ] Ranking comparison.
+- [ ] NER: persons, orgs, locations, dates (+ model types).
+- [ ] Entity highlighting in document view.
+- [ ] Entity search and search filtered by entity/type.
+- [ ] Three GUI views + document details.
+- [ ] (Optional) top entities panel and statistics.
 
-| ID | Metoda | Opis |
-|----|--------|------|
-| P2-S-01 | Słowa kluczowe | Wyszukiwanie dokumentów zawierających podane **słowa lub frazy**. |
-| P2-S-02 | TF-IDF | Wyszukiwanie i **ranking** dokumentów na podstawie **podobieństwa tekstowego**. |
-| P2-S-03 | Semantyczne | Znajdowanie dokumentów **podobnych znaczeniowo** do zapytania. |
+## 9. Open decisions
 
-Wymagania dla wyników i interfejsu wyszukiwania:
-
-| ID | Wymaganie |
-|----|-----------|
-| P2-S-04 | Każdy wynik zawiera: **nazwę dokumentu**, **wynik dopasowania (score)**, **fragment tekstu związany z zapytaniem**. |
-| P2-S-05 | Użytkownik może **otworzyć dokument** i przejrzeć jego treść. |
-| P2-S-06 | Użytkownik wpisuje **jedno zapytanie** i widzi **obok siebie** wyniki: słów kluczowych, TF-IDF i semantycznego. |
-| P2-S-07 | Dodatkowo można pokazać **różnice w kolejności dokumentów** między metodami (porównanie rankingów). |
-| P2-S-08 | Wyniki wyszukiwania można **ograniczyć do dokumentów zawierających wskazaną encję lub określony typ encji** (powiązanie z NER). |
-
-## 4. Moduł NER (Named Entity Recognition)
-
-Automatyczne wykrywanie encji w dokumentach, w tym:
-
-- **Osoby**
-- **Organizacje**
-- **Lokalizacje geograficzne**
-- **Daty i okresy**
-- **Inne kategorie** obsługiwane przez wybrany model
-
-| ID | Wymaganie |
-|----|-----------|
-| P2-N-01 | Automatyczne wykrywanie encji powyższych typów. |
-| P2-N-02 | Wyświetlanie wykrytych encji **wraz z typami** i **fragmentami tekstu**, w których występują. |
-| P2-N-03 | W widoku dokumentu encje są **wyróżnione wizualnie** (np. kolorami wg typu). |
-| P2-N-04 | **Wyszukiwanie encji** oraz **znajdowanie dokumentów**, w których występują. |
-| P2-N-05 | Ograniczanie wyników wyszukiwania (sekcja 3) do dokumentów z daną encją lub typem encji (= P2-S-08). |
-
-## 5. Graficzny interfejs użytkownika
-
-Trzy główne widoki:
-
-| Widok | Zawartość |
-|-------|-----------|
-| **Baza dokumentów** | Dodawanie, przeglądanie i usuwanie dokumentów. |
-| **Wyszukiwarka** | Wybór metody wyszukiwania oraz przeglądanie wyników. |
-| **Encje NER** | Lista wykrytych encji, filtrowanie według typu, przeglądanie dokumentów, w których występują. |
-
-| ID | Wymaganie |
-|----|-----------|
-| P2-G-01 | Trzy powyższe widoki. |
-| P2-G-02 | **Szczegóły dokumentu**, jego **metadane** i **wyróżnione encje** dostępne po wybraniu dokumentu z listy wyników lub z bazy dokumentów. |
-
-## 6. Priorytety (wprost z treści)
-
-- **Ważniejsza jest funkcjonalność** związana z przetwarzaniem i eksploracją danych tekstowych niż wygląd interfejsu i architektura aplikacji.
-- **Najważniejsze**: możliwość **porównania** wyszukiwania słów kluczowych, TF-IDF i semantycznego.
-- System powinien umożliwiać **porównywanie rankingów i wyników** uzyskanych różnymi metodami.
-
-## 7. Dodatkowe funkcjonalności (rozszerzenia)
-
-| ID | Rozszerzenie |
-|----|--------------|
-| P2-X-01 | Panel z **najczęściej występującymi encjami** (osoby, organizacje, lokalizacje). |
-| P2-X-02 | Statystyki: **liczba dokumentów**. |
-| P2-X-03 | Statystyki: **długości tekstów**. |
-| P2-X-04 | Statystyki: **najczęściej występujące terminy**. |
-| P2-X-05 | Statystyki: **rozkład wykrytych typów encji**. |
-| P2-X-06 | Wizualizacja różnic w kolejności dokumentów między metodami. |
-
-## 8. Kryteria „zrobione”
-
-- [ ] Dodawanie TXT i PDF, odczyt treści, metadane, przeglądanie, usuwanie.
-- [ ] Automatyczne przygotowanie dokumentów do wyszukiwania i NER.
-- [ ] Trzy metody wyszukiwania z wynikiem: nazwa, score, fragment.
-- [ ] Widok porównawczy: jedno zapytanie → trzy kolumny wyników.
-- [ ] Porównanie rankingów (różnice w kolejności).
-- [ ] NER: osoby, organizacje, lokalizacje, daty/okresy (+ inne).
-- [ ] Wyróżnienie encji w widoku dokumentu.
-- [ ] Wyszukiwanie encji i dokumentów z encją; filtrowanie wyszukiwarki po encji/typie.
-- [ ] Trzy widoki GUI + szczegóły dokumentu.
-- [ ] (Opcjonalnie) panel top encji i statystyki.
-
-## 9. Otwarte decyzje
-
-- Język dokumentów (PL / EN) → model NER i model embeddingów.
-- Model NER (np. spaCy, HuggingFace) i embeddingów (np. sentence-transformers, wielojęzyczny).
-- Przechowywanie: SQLite + pliki vs katalog + JSON; indeks wektorowy (FAISS / numpy).
-- Technologia GUI.
+- Document language (PL / EN) → NER and embedding models.
+- NER model (spaCy, HuggingFace, etc.) and embeddings (e.g. sentence-transformers).
+- Storage: SQLite + files vs folder + JSON; vector index (FAISS / numpy).
+- GUI technology.

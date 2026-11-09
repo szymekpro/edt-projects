@@ -1,54 +1,52 @@
-# Eksploracja danych tekstowych – przegląd projektów
+# Text data exploration – project overview
 
-Dokument zbiera informacje ogólne z treści zadania. Szczegółowe wymagania są w osobnych plikach:
+General information from the assignment text. Detailed requirements:
 
-- [`project-1-sentiment-monitoring.md`](project-1-sentiment-monitoring.md) – Projekt nr 1
-- [`project-2-semantic-search-ner.md`](project-2-semantic-search-ner.md) – Projekt nr 2
+- [`project-1-sentiment-monitoring.md`](project-1-sentiment-monitoring.md) – Project 1
+- [`project-2-semantic-search-ner.md`](project-2-semantic-search-ner.md) – Project 2
 
-## 1. Dostępne tematy
+## 1. Available topics
 
-| Nr | Temat |
-|----|-------|
-| 1 | Inteligentny system monitorowania opinii |
-| 2 | System wyszukiwania semantycznego i ekstrakcji wiedzy |
-| własny | Własny temat zaproponowany przez studentów (wymaga akceptacji prowadzącego) |
+| # | Topic |
+|---|--------|
+| 1 | Intelligent opinion monitoring system |
+| 2 | Semantic search and knowledge extraction |
+| custom | Custom topic (requires instructor approval) |
 
-## 2. Zasady ogólne
+## 2. General rules
 
-- **Projekt własny**
-  - Można zaproponować własny temat związany z tematyką przedmiotu.
-  - Realizacja wymaga **akceptacji prowadzącego**.
-  - Po zatwierdzeniu tematu **zakres projektu i wymagania ustalane są indywidualnie**, z uwzględnieniem:
-    - stopnia złożoności zagadnienia,
-    - liczebności grupy.
-  - W zależności od tych czynników **dopuszcza się realizację tylko jednego projektu**.
-- Treść zadania nie podaje wprost kryteriów oceny ani terminów. Jedyna wskazówka o priorytetach dotyczy projektu 2 (patrz plik projektu 2, sekcja „Priorytety”).
+- **Custom project**
+  - May propose a topic related to the course.
+  - Requires **instructor approval**.
+  - Scope and requirements are agreed individually (complexity, group size).
+  - Depending on those factors, **only one project** may be allowed per group.
+- The assignment text does **not** state grading criteria or deadlines explicitly. The only stated priority hint applies to Project 2 (see Project 2 file, “Priorities”).
 
-## 3. Decyzje organizacyjne (stan na teraz)
+## 3. Repository status
 
-| Kwestia | Decyzja |
-|---------|---------|
-| Który projekt w repozytorium | **Tylko Projekt 1** (`project1_sentiment/`) |
-| Projekt 2 | Tylko wymagania, brak kodu |
-| Implementacja P1 | **Działająca** (trening, GUI, TMDB) |
-| Projekt własny | Nie wybrano |
+| Topic | Decision |
+|-------|----------|
+| Code in repo | **Project 1 only** (`project1_sentiment/`) |
+| Project 2 | Requirements only, no code |
+| Project 1 implementation | **Working** (train, GUI, TMDB) |
+| Custom project | Not selected |
 
-## 4. Elementy wspólne obu projektów
+## 4. Common elements
 
-- Przetwarzanie i eksploracja **danych tekstowych**.
-- Aplikacja z **graficznym interfejsem użytkownika (GUI)**.
-- Wykorzystanie modeli NLP/ML (klasyfikacja sentymentu w P1; TF-IDF, embeddingi, NER w P2).
-- Treść zadania wprost nie narzuca języka programowania, bibliotek ani języka tekstów.
+- **Text** processing and exploration.
+- **Graphical user interface (GUI)**.
+- NLP/ML models (sentiment in P1; TF-IDF, embeddings, NER in P2).
+- Assignment does not mandate programming language, libraries, or text language.
 
-## 5. Decyzje zespołu (ogólne)
+## 5. Team decisions
 
-- Język tekstów: **angielski**.
-- Finalny raport: **wyłącznie po polsku**.
-- Podejście: **klasyczne ML**, możliwie proste, czytelne i szybkie.
-- Interfejs Projektu 1: **GUI w Tkinterze**.
+- Text language: **English**.
+- Separate written report: **not required by the P1 assignment text** (unless the instructor says otherwise).
+- Approach: **classic ML**, keep it simple and fast to build.
+- Project 1 UI: **Tkinter GUI**.
 
-## 6. Otwarte pytania do prowadzącego / grupy
+## 6. Open questions for the instructor / team
 
-- Termin oddania i forma oceny (kod, raport, prezentacja, demo?).
-- Dozwolone biblioteki i modele pretrenowane.
-- Liczebność grupy i ewentualny wymóg realizacji obu projektów.
+- Deadline and deliverables (code only, demo, presentation?).
+- Allowed libraries and pretrained models.
+- Group size and whether both projects must be done.

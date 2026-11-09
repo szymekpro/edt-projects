@@ -1,9 +1,9 @@
-# Projekt 1 – Inteligentny system monitorowania opinii
+# Project 1 – Intelligent opinion monitoring
 
-Aplikacja z GUI (Tkinter): pobiera recenzje filmów z TMDB, klasyfikuje sentyment (pozytywny / negatywny).
-Wymagania: [`../docs/requirements/project-1-sentiment-monitoring.md`](../docs/requirements/project-1-sentiment-monitoring.md).
+Tkinter GUI app: fetches movie reviews from TMDB and classifies sentiment (positive / negative).  
+Requirements: [`../docs/requirements/project-1-sentiment-monitoring.md`](../docs/requirements/project-1-sentiment-monitoring.md).
 
-## Quick start (English)
+## Quick start
 
 **Requires:** Python 3.10+, internet, free [TMDB API key](https://www.themoviedb.org/settings/api) (v3 key).
 
@@ -18,56 +18,49 @@ pip install -e .
 copy .env.example .env
 ```
 
-3. Put your TMDB key in `.env` as `TMDB_API_KEY=...`.
+3. Set `TMDB_API_KEY=...` in `.env`.
 4. Train and run:
 
 ```powershell
 python -m opinion_monitor.training.train
-python -m opinion_monitor                    # GUI: enter a movie title → Fetch and analyze
+python -m opinion_monitor                    # GUI: movie title → Fetch and analyze
 ```
 
-Optional: `python -m opinion_monitor.training.evaluate` (held-out IMDB test metrics).  
-The trained model is written to `models/sentiment_model.joblib` (not in git). Without it, run `train` before the GUI.
+Optional:
+
+```powershell
+python -m opinion_monitor.training.evaluate       # IMDB held-out test metrics
+python -m opinion_monitor.training.evaluate_web   # TMDB reviews, weak labels from user ratings
+```
+
+The trained model is saved to `models/sentiment_model.joblib` (gitignored). Run `train` before the GUI if the file is missing.
 
 ## Stack
 
-| Element | Wybór |
-|---------|-------|
-| Trening | Kaggle IMDB 50K → TF-IDF + Logistic Regression |
-| Predykcja | TMDB API |
-| Model na dysku | `models/sentiment_model.joblib` (wynik `training.train`, patrz niżej) |
-| GUI | Tkinter |
+| Piece | Choice |
+|-------|--------|
+| Training | Kaggle IMDB 50K → TF-IDF + Logistic Regression |
+| Prediction | TMDB API (live reviews) |
+| On-disk model | `models/sentiment_model.joblib` (from `training.train`) |
+| GUI | Tkinter (stdlib) |
 
-## Uruchomienie (PowerShell)
+## Data consistency (assignment P1-D-03)
 
-```powershell
-cd project1_sentiment
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-pip install -e .
-copy .env.example .env          # TMDB_API_KEY
-# data/raw/IMDB Dataset.csv     # z Kaggle
-python -m opinion_monitor.training.train
-python -m opinion_monitor.training.evaluate      # IMDB, test split
-python -m opinion_monitor.training.evaluate_web  # TMDB, słaba etykieta z oceny użytkownika
-python -m opinion_monitor                        # GUI
-```
+Training uses **English movie reviews** from Kaggle IMDB. Prediction uses **English user reviews** from TMDB for the same domain (movies). Reviews differ in length and tone (TMDB is often shorter); the same binary labels and `clean_text` preprocessing apply to both paths.
 
-## Plik `models/sentiment_model.joblib`
+## `models/sentiment_model.joblib`
 
-To **zapisany, wytrenowany model** (cały pipeline scikit-learn: słownik TF-IDF + wagi regresji logistycznej).
-Powstaje po `training.train` z danych IMDB. GUI i `pipeline` **ładują ten plik**, zamiast trenować od zera przy każdym uruchomieniu.
+Serialized **fitted** scikit-learn pipeline (TF-IDF vocabulary + logistic regression weights). Created by `training.train`. GUI and `pipeline` load this file instead of retraining on every run.
 
-- Usuniesz go → trzeba ponownie `python -m opinion_monitor.training.train`.
-- Zmienisz dane lub parametry treningu → znowu `train`.
-- Jest w `.gitignore` (duży, zależy od Twojego komputera) – na oddanie oddajesz kod + instrukcję treningu, nie ten plik.
+- Delete it → run `python -m opinion_monitor.training.train` again.
+- Change training data or hyperparameters → run `train` again.
+- Not in git (local artifact); reviewers train from CSV + README.
 
-## Katalogi
+## Layout
 
 ```
 project1_sentiment/
-├── data/raw/          # IMDB CSV (poza gitem)
-├── models/            # sentiment_model.joblib (poza gitem)
+├── data/raw/          # IMDB CSV (gitignored)
+├── models/            # sentiment_model.joblib (gitignored)
 └── src/opinion_monitor/
 ```
